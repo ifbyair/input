@@ -100,6 +100,8 @@ int main(int ac, char *av[]){
 
     newt = origt;
 
+    newt.c_lflag &= ~(ICANON);
+
     if( tcsetattr(STDIN_FILENO, TCSANOW, &newt) < 0 ){
         tcsetattr(STDIN_FILENO, TCSANOW, &origt);
         gtfo("tcsetattr failed!\n");
