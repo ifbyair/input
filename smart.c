@@ -8,7 +8,7 @@
 #include <lcd.h>
 
 void wtf(char *msg){
-    printf("%s\n",msg)
+    printf("%s\n",msg);
 }
 
 void gtfo(char *msg){

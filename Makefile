@@ -1,13 +1,13 @@
 CC=gcc
-CFLAGS=-I.
-SRCS=xx.c
+CFLAGS=-I. -I../wiringPi/wiringPi -L/usr/local/lib
+SRCS=smart.c
 OBJS=$(SRCS:.c=.o)
-DEPS=xx.h
-LIBS=
-EXEC=xx
+DEPS=smart_lcd.h
+LIBS=-lwiringPi
+EXEC=smart
 
 $(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS)
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $(CFLAGS) $<
