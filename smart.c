@@ -7,6 +7,9 @@
 #include <wiringPi.h>
 #include <lcd.h>
 
+#include <smart_lcd.h>
+#include <smart_encoder.h>
+
 void wtf(char *msg){
     printf("%s\n",msg);
 }
@@ -22,7 +25,7 @@ int main(int ac, char *av[]){
     wiringPiSetup();
 
     lcdHandle=lcdInit(
-        LCD_ROWS,LCD_COLS,LCD_BITS,LCD_ENBL,LCD_CLK,
+        LCD_ROWS,LCD_COLS,LCD_BITS,LCD_CLK,LCD_ENBL,
         LCD_BIT0,LCD_BIT1,LCD_BIT2,LCD_BIT3,0,0,0,0);
 
     if( lcdHandle < 0 )

@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS=-I. -I../wiringPi/wiringPi -L/usr/local/lib
+CFLAGS=-I. -I../wiringPi/wiringPi -I../wiringPi/devLib
 SRCS=smart.c
 OBJS=$(SRCS:.c=.o)
-DEPS=smart_lcd.h
-LIBS=-lwiringPi
+DEPS=smart_lcd.h lcd.h smart.h
+LIBS=-lwiringPi -lwiringPiDev
 EXEC=smart
 
 $(EXEC): $(OBJS)
