@@ -7,11 +7,11 @@ Defining values for rotary encoder
 #define ENCODER_STEP    4   /* encoder change value per step */
 #define ENCODER_EXEC    0   /* encoder button pin */
 
-struct encoder {
+typedef struct enc {
     int pin_a;
     int pin_b;
     int pin_enter;
     volatile long value;
     volatile int lastEncoded;
-};
+} rotaryEncoder;
 

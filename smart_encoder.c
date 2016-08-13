@@ -7,28 +7,32 @@
 
 #include "smart_encoder.h"
 
-struct encoder main_encoder;
+rotaryEncoder encoder;
 
 void updateEncoder(){
-    int MSB = digitalRead(main_encoder.pin_a);
-    int LSB = digitalRead(main_encoder.pin_b);
+    int MSB = digitalRead(encoder.pin_a);
+    int LSB = digitalRead(encoder.pin_b);
 
     int encoded = (MSB << 1) | LSB;
-    int sum = (main_encoder.lastEncoded << 2) | encoded;
+    int sum = (enc->lastEncoded << 2) | encoded;
 
     if(sum == 0b1101 || sum == 0b0100 || sum == 0b0010 || sum == 0b1011) 
-        main_encoder.value++;
+        encoder.value++;
     if(sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000) 
-        main_encoder.value--;
+        encoder.value--;
 
-    main_encoder.lastEncoded = encoded;
+    encoder.lastEncoded = encoded;
 }
 
-void setupencoder(int pin_a, int pin_b){
-    main_encoder.pin_a = pin_a;
-    main_encoder.pin_b = pin_b;
-    main_encoder.value = 0;
-    main_encoder.lastEncoded = 0;
+void execEncoder(){
+    static long lastValue = 0;
+}
+
+void setupencoder(rotaryEncoder *enc,int pin_a,int pin_b,int pin_exec){
+    enc->pin_a = pin_a;
+    enc->pin_b = pin_b;
+    enc->value = 0;
+    enc->lastEncoded = 0;
 
     pinMode(pin_a, INPUT);
     pinMode(pin_b, INPUT);
@@ -39,7 +43,10 @@ void setupencoder(int pin_a, int pin_b){
 
     /* TODO:
     Finish the read of the "Enter" button
-    pinMode(pin_b, INPUT);
+    */
+    pinMode(pin_exec, INPUT);
+    wiringPiISR(pin_exec,INT_EDGE_FALLING, execEncoder);
+    /*
     pullUpDnControl(pin_a, PUD_UP);
     */
 }
@@ -50,6 +57,6 @@ int main(int ac, char **av){
     setupencoder(3,2);
 
     while(1){
-        printf("Value = %ld           \r",main_encoder.value);
+        printf("Value = %ld           \r",encoder.value);
     }
 }
