@@ -26,13 +26,14 @@ void updateEncoder(){
 
 void execEncoder(){
     static long lastValue = 0;
+    printf("\nEnter!\n");
 }
 
-void setupencoder(rotaryEncoder *enc,int pin_a,int pin_b,int pin_exec){
-    enc->pin_a = pin_a;
-    enc->pin_b = pin_b;
-    enc->value = 0;
-    enc->lastEncoded = 0;
+void setupencoder(int pin_a,int pin_b,int pin_exec){
+    enc.pin_a = pin_a;
+    enc.pin_b = pin_b;
+    enc.value = 0;
+    enc.lastEncoded = 0;
 
     pinMode(pin_a, INPUT);
     pinMode(pin_b, INPUT);
@@ -54,7 +55,7 @@ void setupencoder(rotaryEncoder *enc,int pin_a,int pin_b,int pin_exec){
 int main(int ac, char **av){
 
     wiringPiSetup();
-    setupencoder(3,2);
+    setupencoder(3,2,0);
 
     while(1){
         printf("Value = %ld           \r",encoder.value);
