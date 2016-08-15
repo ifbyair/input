@@ -19,8 +19,39 @@ void gtfo(char *msg){
     exit(1);
 }
 
+char *pad(char *msg){
+    int padsize = (LCD_COLS - strlen(msg))/2;
+    char *result = (char *)malloc(LCD_COLS+1);
+
+    if( result == NULL )
+        gtfo("malloc failed in buttonOK()");
+
+    memset(result, ' ', LCD_COLS);
+    result[LCD_COLS] = '\0';
+    memcpy(result+padsize,msg,strlen(msg));
+    return result;
+}
+
+int buttonOK(char *msg){
+    volatile int len = strlen(msg);
+    char *okmsg = NULL;
+
+    if( len <= 0 && len > LCD_COLS ){
+        char error[256];
+        sprintf(error,"buttonOK(): bad message, len = %d",len);
+        gtfo(error);
+    }
+
+    okmsg = pad(msg);
+    printf("-%s-",okmsg);
+    free(okmsg);
+    return 1;
+}
+
 int main(int ac, char *av[]){
     int lcdHandle = 0;
+
+    return buttonOK("Zhopaa");
 
     wiringPiSetup();
 

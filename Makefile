@@ -13,4 +13,7 @@ $(EXEC): $(OBJS)
 	$(CC) -c -o $@ $(CFLAGS) $<
 
 clean: 
-	rm -f $(OBJS) $(EXEC)
+	rm -f $(OBJS) $(EXEC) lcdtest
+
+lcdtest:
+	$(CC) $(CFLAGS) lcd1.c -o $@ $(LIBS)

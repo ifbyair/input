@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <unistd.h>
 
 #include "smart_encoder.h"
 
@@ -14,7 +15,7 @@ void updateEncoder(){
     int LSB = digitalRead(encoder.pin_b);
 
     int encoded = (MSB << 1) | LSB;
-    int sum = (enc->lastEncoded << 2) | encoded;
+    int sum = (encoder.lastEncoded << 2) | encoded;
 
     if(sum == 0b1101 || sum == 0b0100 || sum == 0b0010 || sum == 0b1011) 
         encoder.value++;
@@ -26,14 +27,15 @@ void updateEncoder(){
 
 void execEncoder(){
     static long lastValue = 0;
+    usleep(10000); /* sleep for 10 ms */
     printf("\nEnter!\n");
 }
 
 void setupencoder(int pin_a,int pin_b,int pin_exec){
-    enc.pin_a = pin_a;
-    enc.pin_b = pin_b;
-    enc.value = 0;
-    enc.lastEncoded = 0;
+    encoder.pin_a = pin_a;
+    encoder.pin_b = pin_b;
+    encoder.value = 0;
+    encoder.lastEncoded = 0;
 
     pinMode(pin_a, INPUT);
     pinMode(pin_b, INPUT);

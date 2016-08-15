@@ -26,7 +26,7 @@ int main(int ac, char *av[]){
         exit(0);
     }
 
-    lcdPosition(lcdHandle,0,0);
+    lcdPosition(lcdHandle,1,1);
     lcdPuts (lcdHandle,"Howdy, man!");
     return 1;
 }
